@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="selenium_test" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.tox/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.apk"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.ane"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.7" value="${jdk.home.1.7}/bin"/>
+  <path id="jdk.classpath.1.7">
+    <fileset dir="${jdk.home.1.7}">
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/charsets.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/javazic.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/resources.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/rt.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/compilefontconfig.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/management-agent.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/jce.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/jsse.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/rhino.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/ext/sunpkcs11.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/ext/localedata.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/ext/sunjce_provider.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/ext/dnsns.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/ext/icedtea-sound.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/ext/java-atk-wrapper.jar"/>
+      <include name="../java-1.7.0-openjdk-amd64/jre/lib/ext/zipfs.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.7}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.7}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.7"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.junit4.classpath">
+    <pathelement location="${basedir}/../../../../usr/share/java/junit4.jar"/>
+  </path>
+  
+  <path id="library.selenium-server-standalone-2.46.0.classpath">
+    <pathelement location="${basedir}/../../workspace/selenium/selenium-server-standalone-2.46.0.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module Selenium Test -->
+  
+  <dirname property="module.selenium_test.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.selenium_test" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.selenium_test" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.selenium_test" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.selenium_test" value="-encoding UTF-8 -source 1.7 ${compiler.args}"/>
+  
+  <property name="selenium_test.output.dir" value="${module.selenium_test.basedir}/out/production/Selenium Test"/>
+  <property name="selenium_test.testoutput.dir" value="${module.selenium_test.basedir}/out/test/Selenium Test"/>
+  
+  <path id="selenium_test.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="selenium_test.module.production.classpath">
+    <path refid="${module.jdk.classpath.selenium_test}"/>
+    <path refid="library.selenium-server-standalone-2.46.0.classpath"/>
+    <path refid="library.junit4.classpath"/>
+  </path>
+  
+  <path id="selenium_test.runtime.production.module.classpath">
+    <pathelement location="${selenium_test.output.dir}"/>
+    <path refid="library.selenium-server-standalone-2.46.0.classpath"/>
+    <path refid="library.junit4.classpath"/>
+  </path>
+  
+  <path id="selenium_test.module.classpath">
+    <path refid="${module.jdk.classpath.selenium_test}"/>
+    <pathelement location="${selenium_test.output.dir}"/>
+    <path refid="library.selenium-server-standalone-2.46.0.classpath"/>
+    <path refid="library.junit4.classpath"/>
+  </path>
+  
+  <path id="selenium_test.runtime.module.classpath">
+    <pathelement location="${selenium_test.testoutput.dir}"/>
+    <pathelement location="${selenium_test.output.dir}"/>
+    <path refid="library.selenium-server-standalone-2.46.0.classpath"/>
+    <path refid="library.junit4.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.selenium_test">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.selenium_test">
+    <patternset refid="excluded.from.module.selenium_test"/>
+  </patternset>
+  
+  <path id="selenium_test.module.sourcepath">
+    <dirset dir="${module.selenium_test.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.selenium_test" depends="compile.module.selenium_test.production,compile.module.selenium_test.tests" description="Compile module Selenium Test"/>
+  
+  <target name="compile.module.selenium_test.production" depends="register.custom.compilers" description="Compile module Selenium Test; production classes">
+    <mkdir dir="${selenium_test.output.dir}"/>
+    <javac2 destdir="${selenium_test.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.selenium_test}/javac">
+      <compilerarg line="${compiler.args.selenium_test}"/>
+      <bootclasspath refid="selenium_test.module.bootclasspath"/>
+      <classpath refid="selenium_test.module.production.classpath"/>
+      <src refid="selenium_test.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.selenium_test"/>
+    </javac2>
+    
+    <copy todir="${selenium_test.output.dir}">
+      <fileset dir="${module.selenium_test.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.selenium_test.tests" depends="register.custom.compilers,compile.module.selenium_test.production" description="compile module Selenium Test; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.selenium_test" description="cleanup module">
+    <delete dir="${selenium_test.output.dir}"/>
+    <delete dir="${selenium_test.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.selenium_test" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.selenium_test" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+
+  <target name="unit-test-1" >
+
+    <junit printsummary="yes" haltonfailure="yes">
+
+      <classpath>
+        <pathelement location="$/home/apium/IdeaProjects/Selenium Test"/>
+        <pathelement location="$/home/apium/IdeaProjects/Selenium Test/src/com/example/tests"/>
+        <pathelement path="${java.class.path}"/>
+      </classpath>
+
+      <test name="com.example.tests.MyUnitTest"
+            haltonfailure="no" outfile="result">
+
+        <formatter type="plain"/>
+        <formatter type="xml"/>
+
+      </test>
+
+    </junit>
+  </target>
+
+</project>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_selenium_test" default="compile.module.selenium_test">
+  <dirname property="module.selenium_test.basedir" file="${ant.file.module_selenium_test}"/>
+  
+  <property name="module.jdk.home.selenium_test" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.selenium_test" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.selenium_test" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.selenium_test" value="-encoding UTF-8 -source 1.7 ${compiler.args}"/>
+  
+  <property name="selenium_test.output.dir" value="${module.selenium_test.basedir}/out/production/Selenium Test"/>
+  <property name="selenium_test.testoutput.dir" value="${module.selenium_test.basedir}/out/test/Selenium Test"/>
+  
+  <path id="selenium_test.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="selenium_test.module.production.classpath">
+    <path refid="${module.jdk.classpath.selenium_test}"/>
+    <path refid="library.selenium-server-standalone-2.46.0.classpath"/>
+    <path refid="library.junit4.classpath"/>
+  </path>
+  
+  <path id="selenium_test.runtime.production.module.classpath">
+    <pathelement location="${selenium_test.output.dir}"/>
+    <path refid="library.selenium-server-standalone-2.46.0.classpath"/>
+    <path refid="library.junit4.classpath"/>
+  </path>
+  
+  <path id="selenium_test.module.classpath">
+    <path refid="${module.jdk.classpath.selenium_test}"/>
+    <pathelement location="${selenium_test.output.dir}"/>
+    <path refid="library.selenium-server-standalone-2.46.0.classpath"/>
+    <path refid="library.junit4.classpath"/>
+  </path>
+  
+  <path id="selenium_test.runtime.module.classpath">
+    <pathelement location="${selenium_test.testoutput.dir}"/>
+    <pathelement location="${selenium_test.output.dir}"/>
+    <path refid="library.selenium-server-standalone-2.46.0.classpath"/>
+    <path refid="library.junit4.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.selenium_test">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.selenium_test">
+    <patternset refid="excluded.from.module.selenium_test"/>
+  </patternset>
+  
+  <path id="selenium_test.module.sourcepath">
+    <dirset dir="${module.selenium_test.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.selenium_test" depends="compile.module.selenium_test.production,compile.module.selenium_test.tests" description="Compile module Selenium Test"/>
+  
+  <target name="compile.module.selenium_test.production" depends="register.custom.compilers" description="Compile module Selenium Test; production classes">
+    <mkdir dir="${selenium_test.output.dir}"/>
+    <javac2 destdir="${selenium_test.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.selenium_test}/javac">
+      <compilerarg line="${compiler.args.selenium_test}"/>
+      <bootclasspath refid="selenium_test.module.bootclasspath"/>
+      <classpath refid="selenium_test.module.production.classpath"/>
+      <src refid="selenium_test.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.selenium_test"/>
+    </javac2>
+    
+    <copy todir="${selenium_test.output.dir}">
+      <fileset dir="${module.selenium_test.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.selenium_test.tests" depends="register.custom.compilers,compile.module.selenium_test.production" description="compile module Selenium Test; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.selenium_test" description="cleanup module">
+    <delete dir="${selenium_test.output.dir}"/>
+    <delete dir="${selenium_test.testoutput.dir}"/>
+  </target>
+</project>
