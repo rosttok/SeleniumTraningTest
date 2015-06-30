@@ -9,7 +9,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class loginaddremovecommunitiesff {
+public class addcom {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -30,24 +30,17 @@ public class loginaddremovecommunitiesff {
         driver.findElement(By.id("signin_password")).clear();
         driver.findElement(By.id("signin_password")).sendKeys("admin");
         driver.findElement(By.cssSelector("button.button")).click();
-        driver.get(baseUrl + "en/profile/edit");
-        driver.findElement(By.xpath("(//img[@alt='Leave this community'])[3]")).click();
-        assertTrue(closeAlertAndGetItsText().matches("^Are you sure[\\s\\S]$"));
-        driver.findElement(By.xpath("(//img[@alt='Leave this community'])[2]")).click();
-        assertTrue(closeAlertAndGetItsText().matches("^Are you sure[\\s\\S]$"));
-        driver.findElement(By.cssSelector("a[alt=\"Leave\"]")).click();
-        assertTrue(closeAlertAndGetItsText().matches("^Are you sure[\\s\\S]$"));
-        driver.findElement(By.id("profile_community_comunity")).click();
-        driver.get(baseUrl + "en/profile/edit");
+        driver.get(baseUrl + "/en/profile/edit");
         new Select(driver.findElement(By.id("profile_community_community"))).selectByVisibleText("My Sample Community #1");
         driver.findElement(By.cssSelector("button")).click();
+        Thread.sleep(2000);
         new Select(driver.findElement(By.id("profile_community_community"))).selectByVisibleText("My Sample Community #2");
         driver.findElement(By.cssSelector("button")).click();
+        Thread.sleep(2000);
         new Select(driver.findElement(By.id("profile_community_community"))).selectByVisibleText("CAPS");
         driver.findElement(By.cssSelector("button")).click();
+        Thread.sleep(2000);
         driver.findElement(By.cssSelector("button.button.submitButton")).click();
-
-
     }
 
     @After
@@ -92,4 +85,3 @@ public class loginaddremovecommunitiesff {
         }
     }
 }
-
